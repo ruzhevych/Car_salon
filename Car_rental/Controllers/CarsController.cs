@@ -1,5 +1,6 @@
 ﻿﻿using AutoMapper;
 using Core.Dtos;
+using Core.Interfaces;
 using Data.Data;
 using Data.Entities;
 using Microsoft.AspNetCore.Http;
@@ -12,90 +13,59 @@ namespace Car_rental.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly CarsDbContext ctx;
-        private readonly IMapper mapper;
+        private readonly ICarsService carsService;
 
-        public CarsController(CarsDbContext ctx, IMapper mapper)
+        public CarsController(ICarsService carsService)
         {
-            this.ctx = ctx;
-            this.mapper = mapper;
+            this.carsService = carsService;
         }
 
         // [C]reate [R]ead [U]pdate [D]elete
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var items = mapper.Map<List<CarsDto>>(ctx.Cars.ToList());
-            return Ok(items);
+            return Ok(await carsService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var product = ctx.Cars.Find(id);
-            if (product == null) return NotFound();
-
-            ctx.Entry(product).Reference(x => x.Category).Load();
-
-            return Ok(mapper.Map<CarsDto>(product));
+            return Ok(await carsService.Get(id));
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCarsDto model)
+        public async Task<IActionResult> Create(CreateCarsDto model)
         {
-            if (!ModelState.IsValid) return BadRequest();
-
-            ctx.Cars.Add(mapper.Map<Cars>(model));
-            ctx.SaveChanges();
-
+            await carsService.Create(model);
             return Ok();
         }
 
         [HttpPut]
-        public IActionResult Edit(EditCarsDto model)
+        public async Task<IActionResult> Edit(EditCarsDto model)
         {
-            if (!ModelState.IsValid) return BadRequest();
-
-            ctx.Cars.Update(mapper.Map<Cars>(model));
-            ctx.SaveChanges();
-
+            await carsService.Edit(model);
             return Ok();
         }
 
         [HttpPatch("archive")]
-        public IActionResult Archive(int id)
+        public async Task<IActionResult> Archive(int id)
         {
-            var product = ctx.Cars.Find(id);
-            if (product == null) return NotFound();
-
-            product.Archived = true;
-            ctx.SaveChanges();
-
+            await carsService.Archive(id);
             return Ok();
         }
 
         [HttpPatch("restore")]
-        public IActionResult Restore(int id)
+        public async Task<IActionResult> Restore(int id)
         {
-            var product = ctx.Cars.Find(id);
-            if (product == null) return NotFound();
-
-            product.Archived = false;
-            ctx.SaveChanges();
-
+            await carsService.Restore(id);
             return Ok();
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var product = ctx.Cars.Find(id);
-            if (product == null) return NotFound();
-
-            ctx.Cars.Remove(product);
-            ctx.SaveChanges();
-
+             await carsService.Delete(id);
             return Ok();
         }
     }

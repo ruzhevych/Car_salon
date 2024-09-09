@@ -1,4 +1,6 @@
+using Core.Interfaces;
 using Core.MapperProfile;
+using Core.Services;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +20,8 @@ builder.Services.AddDbContext<CarsDbContext>(options =>
 );
 
 builder.Services.AddAutoMapper(typeof(AppProfile));
+
+builder.Services.AddScoped<ICarsService, CarsService>();
 
 var app = builder.Build();
 
