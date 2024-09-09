@@ -3,6 +3,7 @@ using Core.Dtos;
 using Core.Interfaces;
 using Data.Data;
 using Data.Entities;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,13 @@ namespace Core.Services
     {
         private readonly CarsDbContext ctx;
         private readonly IMapper mapper;
+        private readonly IValidator<CreateCarsDto> validator;
 
-        public CarsService(CarsDbContext ctx, IMapper mapper)
+        public CarsService(CarsDbContext ctx, IMapper mapper, IValidator<CreateCarsDto> validator)
         {
             this.ctx = ctx;
             this.mapper = mapper;
+            this.validator = validator;
         }
 
         public async Task Archive(int id)
@@ -35,6 +38,7 @@ namespace Core.Services
         public async Task Create(CreateCarsDto model)
         {
             // TODO: validate model
+            //validator.ValidateAndThrow(model);
 
             ctx.Cars.Add(mapper.Map<Cars>(model));
             await ctx.SaveChangesAsync();
