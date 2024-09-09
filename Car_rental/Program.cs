@@ -1,3 +1,4 @@
+using Core.MapperProfile;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CarsDbContext>(options => 
     options.UseSqlServer(connectionString)
 );
+
+builder.Services.AddAutoMapper(typeof(AppProfile));
 
 var app = builder.Build();
 
