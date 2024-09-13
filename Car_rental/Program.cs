@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Core.MapperProfile;
 using Core.Services;
 using Data.Data;
+using Data.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddAutoMapper(typeof(AppProfile));
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped<ICarsService, CarsService>();
 
