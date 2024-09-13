@@ -30,6 +30,8 @@ builder.Services.AddAutoMapper(typeof(AppProfile));
 
 builder.Services.AddScoped<ICarsService, CarsService>();
 
+builder.Services.AddExceptionHandler<HttpExceptionHandler>();
+builder.Services.AddProblemDetails();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,7 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ErrorHandlerMiddleware>();
+//app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
