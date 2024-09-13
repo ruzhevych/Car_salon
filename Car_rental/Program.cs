@@ -1,3 +1,4 @@
+using Car_rental.Middlewares;
 using Core.Interfaces;
 using Core.MapperProfile;
 using Core.Services;
@@ -37,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<CustomMiddleware>();
 
 app.UseHttpsRedirection();
 
