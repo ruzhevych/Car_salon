@@ -20,7 +20,7 @@ namespace Data.Data
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Car_rental;Integrated Security=True;");
+            optionsBuilder.UseSqlServer("workstation id=CarsSalonDB.mssql.somee.com;packet size=4096;user id=ruzhe43_SQLLogin_1;pwd=daz9l85hd2;data source=CarsSalonDB.mssql.somee.com;persist security info=False;initial catalog=CarsSalonDB;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
