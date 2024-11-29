@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string? connectionString = builder.Configuration.GetConnectionString("LocalDb");
+string? connectionString = builder.Configuration.GetConnectionString("SomeeDb");
 
 // Add services to the container.
 
