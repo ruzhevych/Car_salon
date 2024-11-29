@@ -34,6 +34,12 @@ namespace Car_rental.Controllers
             return Ok(await carsService.Get(id));
         }
 
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetCategories()
+        {
+            return Ok(await carsService.GetCategories());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateCarsDto model)
         {

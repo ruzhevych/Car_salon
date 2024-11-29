@@ -9,6 +9,7 @@ namespace Core.Interfaces
 {
     public interface ICarsService
     {
+        Task<IEnumerable<CategoryDto>> GetCategories();
         Task<IEnumerable<CarsDto>> GetAll();
         Task<CarsDto?> Get(int id);
         Task Edit(EditCarsDto model);
