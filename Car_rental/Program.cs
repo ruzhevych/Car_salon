@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.WithOrigins("https://zealous-moss-00cd46f10.4.azurestaticapps.net") // Дозволити запити з вашого фронтенду
+        policy.WithOrigins("https://zealous-moss-00cd46f10.4.azurestaticapps.net","http://localhost:5173"  ) // Дозволити запити з вашого фронтенду
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
