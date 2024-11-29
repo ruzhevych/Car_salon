@@ -23,6 +23,8 @@ builder.Services.AddDbContext<CarsDbContext>(options =>
     options.UseSqlServer(connectionString)
 );
 
+builder.Services.AddCors();
+
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
