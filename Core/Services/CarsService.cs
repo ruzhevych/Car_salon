@@ -23,12 +23,14 @@ namespace Core.Services
         private readonly IMapper mapper;
         private readonly IValidator<CreateCarsDto> validator;
         private readonly IRepository<Cars> carsR;
+        private readonly IRepository<Category> categoryR;
 
-        public CarsService(CarsDbContext ctx, IMapper mapper, IValidator<CreateCarsDto> validator, IRepository<Cars> carsR)
+        public CarsService(CarsDbContext ctx, IMapper mapper, IValidator<CreateCarsDto> validator, IRepository<Cars> carsR, IRepository<Category> categoryR)
         {
             this.mapper = mapper;
             this.validator = validator;
             this.carsR = carsR;
+            this.categoryR = categoryR;
         }
 
         public async Task Archive(int id)
@@ -82,8 +84,14 @@ namespace Core.Services
 
         public async Task<IEnumerable<CarsDto>> GetAll()
         {
-            return mapper.Map<List<CarsDto>>(await carsR.GetAll());
+            return mapper.Map<List<CarsDto>>(await carsR.Get(includeProperties: "Category"));
         }
+
+        public async Task<IEnumerable<CategoryDto>> GetCategories()
+        {
+            return mapper.Map<IEnumerable<CategoryDto>>(await categoryR.GetAll());
+        }
+
 
         public async Task Restore(int id)
         {
